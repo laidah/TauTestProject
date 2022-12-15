@@ -1,3 +1,4 @@
+import csv
 import pytest
 
 
@@ -28,3 +29,16 @@ parameters = [
 def test_multiplication(a, b, result):
     assert a * b == result
 
+
+# Parametrized tests reading data from csv
+def get_data(csv_name):
+    with open(csv_name) as csv_file:
+        params = []
+        for row in csv_file:
+            params.append([int(value) for value in row.split(',')])
+    return params
+
+
+@pytest.mark.parametrize('a, b, result', get_data('../multiply_test_data.csv'))
+def test_multiplication(a, b, result):
+    assert a * b == result
