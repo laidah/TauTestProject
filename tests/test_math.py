@@ -35,6 +35,7 @@ parameters = [
 def test_multiplication(a, b, result):
     assert a * b == result
 
+
 # ----------------------------------------
 # Parametrized tests reading data from csv
 # ----------------------------------------
