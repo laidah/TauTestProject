@@ -22,12 +22,12 @@ def test_division_by_zero_exception():
 # Parametrized tests for multiplication
 # -------------------------------------
 parameters = [
-    (2, 3, 6),          # positives
-    (1, 99, 99),        # identity
-    (-1, 3, -3),        # positive and negative
-    (-3, -3, 9),        # two negatives
+    (2, 3, 6),  # positives
+    (1, 99, 99),  # identity
+    (-1, 3, -3),  # positive and negative
+    (-3, -3, 9),  # two negatives
     (2.5, 6.7, 16.75),  # floats
-    (0, 99, 0)          # zero
+    (0, 99, 0)  # zero
 ]
 
 
@@ -47,8 +47,8 @@ def get_data(csv_name):
     return params
 
 
-@pytest.mark.parametrize('a, b, result', get_data('multiply_test_data.csv'))
-def test_multiplication(a, b, result):
+@pytest.mark.parametrize('a, b, result', get_data('tests/fixtures/multiply_test_data.csv'))
+def test_multiplication_csv_params(a, b, result):
     assert a * b == result
 
 
@@ -56,16 +56,19 @@ def test_multiplication(a, b, result):
 # Parametrized with hypothesis
 # ----------------------------
 def multiplication(a, b):
-    return a*b
+    return a * b
 
 
 @given(st.integers(), st.integers())
-def test_multiplication(a, b):
+@pytest.mark.hypothesis
+def test_multiplication_hypothesis(a, b):
     assert multiplication(a, b) == multiplication(b, a)
 
 
 @given(st.floats(allow_nan=False, allow_subnormal=False, allow_infinity=False), st.floats(allow_nan=False,
-        allow_subnormal=False, allow_infinity=False))
-def test_multiplication(a, b):
+                                                                                          allow_subnormal=False,
+                                                                                          allow_infinity=False))
+@pytest.mark.hypothesis
+def test_multiplication_floats(a, b):
     print("a = {}, b={}".format(a, b))
     assert multiplication(a, b) == multiplication(b, a)
